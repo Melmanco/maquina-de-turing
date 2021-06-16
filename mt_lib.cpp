@@ -1,5 +1,9 @@
 #include <iostream>
+#include<vector>
+#include<map>
 using namespace std;
+
+typedef typename std::map<char,string*>::value_type map_val;
 
 struct nodo
 {
@@ -53,11 +57,58 @@ int main()
     char nuevo;
     struct nodo* cabeza = NULL;
     struct nodo* cola = NULL;
+    string estado_inicial;
+    vector<string> estados_finales;
+    string estado;
+    bool entrada_finales = false;
+    map<string, map<char,string*>> transiciones;
+    string estado_entrada;
+    char simbolo_entrada;
+    string estado_llegada;
+    char simbolo_llegada;
+    char direccion;
+    bool entrada_transiciones = false;
+    bool entrada_simbolos;
+    
 
+    //estado inicial
+    cin >> estado_inicial;
+
+    //estados finales
+    do
+    {
+        cin >> estado;
+        estados_finales.push_back(estado);
+    }while(entrada_finales);
+
+    //transiciones
+    do
+    {
+        cin >> estado_entrada;
+        cin >> simbolo_entrada;
+        cin >> estado_llegada;
+        cin >> simbolo_llegada;
+        cin >> direccion;
+
+        string lista_llegada[3] = {estado_llegada, string(1,simbolo_llegada), string(1,direccion)};
+
+        transiciones[estado_entrada].insert(map_val(simbolo_entrada, lista_llegada));
+
+    } while (entrada_transiciones);
+    
+
+    //palabra de entrada
     do
     {
         cin >> nuevo;
         insertar_cola(&cabeza, &cola, nuevo);
         imprimir_lista(cabeza);
-    }while(nuevo >= 'a' && nuevo <= 'z');
+    }while(entrada_simbolos);
+
+    //analizar palabra
+    //funcion que procesa un simbolo, en el primer simbolo
+    //almacenar estado actual, simbolo actual y seguir procesando la palabra
+    //al final del proceso de cada simbolo, analizar si el estado de llegada es final
+    //si se encuentra un simbolo que no existe en el estado actual, se rechaza la palabra
+
 }
